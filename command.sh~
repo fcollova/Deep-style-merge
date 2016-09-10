@@ -1,0 +1,1 @@
+docker run -ti --volume=$(pwd):/workspace -u $(id -u):$(id -g) caffe:cpu  bash

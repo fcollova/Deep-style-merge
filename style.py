@@ -487,11 +487,17 @@ def main(args):
     img_content = caffe.io.load_image(args.content_img)
     logging.info("Successfully loaded images.")
     
+    print ("hello")
+    
     # artistic style class
     use_pbar = not args.verbose
+    print ("hello")
     st = StyleTransfer(args.model.lower(), use_pbar=use_pbar)
+    print ("hello")
     logging.info("Successfully loaded model {0}.".format(args.model))
 
+    print ("hello")
+ 
     # perform style transfer
     start = timeit.default_timer()
     n_iters = st.transfer_style(img_style, img_content, length=args.length, 
