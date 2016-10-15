@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM nvidia/cuda:8.0-cudnn5-devel-ubuntu14.04
 MAINTAINER caffe-maint@googlegroups.com
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -32,7 +32,7 @@ ENV CLONE_TAG=master
 RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/BVLC/caffe.git . && \
     for req in $(cat python/requirements.txt) pydot; do pip install $req; done && \
     mkdir build && cd build && \
-    cmake -DCPU_ONLY=1 .. && \
+    cmake -DUSE_CUDNN=1 .. && \
     make -j"$(nproc)"
 
 ENV PYCAFFE_ROOT $CAFFE_ROOT/python
@@ -40,5 +40,5 @@ ENV PYTHONPATH $PYCAFFE_ROOT:$PYTHONPATH
 ENV PATH $CAFFE_ROOT/build/tools:$PYCAFFE_ROOT:$PATH
 RUN echo "$CAFFE_ROOT/build/lib" >> /etc/ld.so.conf.d/caffe.conf && ldconfig
 
-RUN pip install progressbar 
+RUN pip install progressbar
 WORKDIR /workspace
